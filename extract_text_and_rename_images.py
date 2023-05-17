@@ -78,8 +78,10 @@ print("Cropping, inverting colors, enhancing contrast, and adding padding comple
 import pytesseract
 
 # Open the image
+progress_counter = 0
 for filename in os.listdir(temp_folder_path):
-    print("Procesing " + filename + " Progress: " + str(round((len(os.listdir(temp_folder_path)) / len(os.listdir(input_folder_path))) * 100, 2)) + "%")
+    print("Procesing " + filename + " Progress: " + str(progress_counter / len(os.listdir(temp_folder_path)) * 100) + "%")
+    progress_counter += 1
     file_path = os.path.join(temp_folder_path, filename)
 
     image = Image.open(file_path)
@@ -90,6 +92,7 @@ for filename in os.listdir(temp_folder_path):
     # Replace the / with a -
     text_from_image = text_from_image.replace("/", "-")
     text_from_image.strip()
+
     # Remove the \n and \f characters
     text_from_image = text_from_image.replace("\n", "")
     text_from_image = text_from_image.replace("\f", "")
