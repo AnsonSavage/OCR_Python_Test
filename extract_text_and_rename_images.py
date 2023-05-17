@@ -93,9 +93,10 @@ for filename in os.listdir(temp_folder_path):
     text_from_image = text_from_image.replace("/", "-")
     text_from_image.strip()
 
-    # Remove the \n and \f characters
+    # Remove the \n, \, and \f characters
     text_from_image = text_from_image.replace("\n", "")
     text_from_image = text_from_image.replace("\f", "")
+    text_from_image = text_from_image.replace("\\", ":")
 
     original_path = os.path.join(input_folder_path, filename)
     # Copy this file to the output folder
