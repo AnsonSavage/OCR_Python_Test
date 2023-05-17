@@ -119,6 +119,9 @@ for filename in os.listdir(temp_folder_path):
     # Ensure that a number follows directly after a colon
     text_from_image = delete_whitespace_after_colon(text_from_image)
 
+    if text_from_image.count(":") != 2:
+        text_from_image += "DOUBLE_CHECK"
+
     original_path = os.path.join(input_folder_path, filename)
     # Copy this file to the output folder
     output_path = os.path.join(output_folder_path, text_from_image + ".jpg")
