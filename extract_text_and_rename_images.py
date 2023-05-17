@@ -2,6 +2,21 @@ import os
 from PIL import Image, ImageOps, ImageEnhance
 import argparse
 import shutil
+import re
+
+
+def delete_whitespace_after_colon(string):
+    segments = string.split(":")
+    fixed_segments = []
+    for segment in segments:
+        reduced_string = ""
+        i = 0
+        for i in range(len(segment)):
+            if segment[i].isdigit():
+                break
+        reduced_string = segment[i:]
+        fixed_segments.append(reduced_string)
+    return ":".join(fixed_segments)
 
 parser = argparse.ArgumentParser(description="Crop and process images")
 parser.add_argument("input_folder", help="Path to the folder containing the images")
@@ -77,6 +92,9 @@ print("Cropping, inverting colors, enhancing contrast, and adding padding comple
 # NAME IMAGES
 import pytesseract
 
+def get_index_of_last_occurrence_of_character(string, character):
+    return string.rfind(character)
+
 # Open the image
 progress_counter = 0
 for filename in os.listdir(temp_folder_path):
@@ -97,6 +115,9 @@ for filename in os.listdir(temp_folder_path):
     text_from_image = text_from_image.replace("\n", "")
     text_from_image = text_from_image.replace("\f", "")
     text_from_image = text_from_image.replace("\\", ":")
+
+    # Ensure that a number follows directly after a colon
+    text_from_image = delete_whitespace_after_colon(text_from_image)
 
     original_path = os.path.join(input_folder_path, filename)
     # Copy this file to the output folder
